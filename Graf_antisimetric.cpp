@@ -1,48 +1,38 @@
 #include "Graf_antisimetric.h"
 
-Graf_antisimetric::Graf_antisimetric(const Matrice& M, int nr): Graf{nr}, adiacenta{M} {}
-
-Graf_antisimetric::Graf_antisimetric(const Graf_antisimetric& g): Graf(g)
+Graf_antisimetric::Graf_antisimetric(const Matrice& M, int nr): adiacenta{M}
 {
-    adiacenta = g.adiacenta;
+    noduri = nr;
 }
+
+Graf_antisimetric::Graf_antisimetric(const Graf_antisimetric& g) = default;
 
 Graf_antisimetric::~Graf_antisimetric() = default;
 
-std::istream& operator >>(std::istream& read, Graf_antisimetric& g)
+std::istream& operator >>(std::istream& reader, Graf_antisimetric& g)
 {
     int i, j, k;
 
-    read >> g.noduri;
+    reader >> g.noduri;
     g.adiacenta = Matrice(g.noduri, g.noduri);
     for(i = 0; i < g.noduri; i++)
         for(j = 0; j < g.noduri; j++)
         {
-            read >> k;
+            reader >> k;
             g.adiacenta.setval(i, j, k);
         }
 
-    return read;
+    return reader;
 }
 
-std::ostream& operator <<(std::ostream& write, const Graf_antisimetric& g)
+std::ostream& operator <<(std::ostream& writer, const Graf_antisimetric& g)
 {
-    write << g.noduri << " noduri\n" << g.adiacenta << '\n';
+    writer << g.noduri << " noduri\n" << g.adiacenta << '\n';
 
-    return write;
+    return writer;
 }
 
-Graf_antisimetric& Graf_antisimetric::operator =(const Graf_antisimetric& g)
-{
-    if(this != &g)
-    {
-        this->noduri = g.noduri;
-        this->adiacenta = g.adiacenta;
-    }
-
-    return *this;
-}
-
+Graf_antisimetric& Graf_antisimetric::operator =(const Graf_antisimetric& g) = default;
 void Graf_antisimetric::afisare_arce()
 {
     int i, j;
@@ -50,6 +40,6 @@ void Graf_antisimetric::afisare_arce()
     std::cout << "Arce graf antisimetric:\n";
     for(i = 0; i < noduri; i++)
         for(j = 0; j < noduri; j++)
-            if(adiacenta.getval(i, j) == 1)
+            if(adiacenta(i, j) == 1)
                 std::cout << i << ' ' << j << '\n';
 }

@@ -2,6 +2,13 @@ Nu se poate forma un graf complet, antisimetric sau turneu cu matricea 0
 
 Graf complet format cu matricea 1
 4 noduri, 7 muchii
+0 1
+0 2
+0 3
+1 0
+1 2
+2 3
+3 1
 
 Graf antisimetric format cu matricea 2
 4 noduri

@@ -13,13 +13,13 @@ public:
     Matrice(const Matrice& mat);
     ~Matrice();
 
-    friend std::istream& operator >>(std::istream& read, Matrice& mat);
-    friend std::ostream& operator <<(std::ostream& write, const Matrice& mat);
+    friend std::istream& operator >>(std::istream& reader, Matrice& mat);
+    friend std::ostream& operator <<(std::ostream& writer, const Matrice& mat);
 
     Matrice& operator =(const Matrice& mat);
 
     void setval(int i, int j, int k);
-    int getval(int i, int j) const;
+    int& operator ()(int i, int j);
 
     int getn() const;
     int getm() const;

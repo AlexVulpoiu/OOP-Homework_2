@@ -14,8 +14,8 @@ public:
     Graf_antisimetric(const Graf_antisimetric& g);
     ~Graf_antisimetric() override;
 
-    friend std::istream& operator >>(std::istream& read, Graf_antisimetric &g);
-    friend std::ostream& operator <<(std::ostream& write, const Graf_antisimetric& g);
+    friend std::istream& operator >>(std::istream& reader, Graf_antisimetric &g);
+    friend std::ostream& operator <<(std::ostream& writer, const Graf_antisimetric& g);
 
     Graf_antisimetric& operator =(const Graf_antisimetric& g);
 

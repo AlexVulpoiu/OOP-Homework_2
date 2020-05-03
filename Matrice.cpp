@@ -39,31 +39,34 @@ Matrice::~Matrice()
     n = 0;
 }
 
-std::istream& operator >>(std::istream& read, Matrice& mat)
+std::istream& operator >>(std::istream& reader, Matrice& mat)
 {
     int i, j;
 
-    read >> mat.n >> mat.m;
+    for(i = 0; i < mat.n; i++)
+        delete []mat.a[i];
+    delete []mat.a;
+    reader >> mat.n >> mat.m;
     mat.a = new int* [mat.n];
     for(i = 0; i < mat.n; i++)
         mat.a[i] = new int [mat.m];
     for(i = 0; i < mat.n; i++)
         for(j = 0; j < mat.m; j++)
-            read >> mat.a[i][j];
+            reader >> mat.a[i][j];
 
-    return read;
+    return reader;
 }
 
-std::ostream& operator <<(std::ostream& write, const Matrice& mat)
+std::ostream& operator <<(std::ostream& writer, const Matrice& mat)
 {
     int i, j;
 
-    write << "n = " << mat.n << ", m = " << mat.m << '\n';
-    for(i = 0; i < mat.n; i++, write << '\n')
+    writer << "n = " << mat.n << ", m = " << mat.m << '\n';
+    for(i = 0; i < mat.n; i++, writer << '\n')
         for(j = 0; j < mat.m; j++)
-            write << mat.a[i][j] << ' ';
+            writer << mat.a[i][j] << ' ';
 
-    return write;
+    return writer;
 }
 
 Matrice& Matrice::operator =(const Matrice& mat)
@@ -72,14 +75,17 @@ Matrice& Matrice::operator =(const Matrice& mat)
 
     if(this != &mat)
     {
-        for(i = 0; i < n; i++)
-            delete []a[i];
-        delete []a;
-        n = mat.n;
-        m = mat.m;
-        a = new int* [n];
-        for(i = 0; i < n; i++)
-            a[i] = new int [m];
+        if(mat.n > n || mat.m > m)
+        {
+            for(i = 0; i < n; i++)
+                delete []a[i];
+            delete []a;
+            n = mat.n;
+            m = mat.m;
+            a = new int* [n];
+            for(i = 0; i < n; i++)
+                a[i] = new int[m];
+        }
         for(i = 0; i < n; i++)
             for(j = 0; j < m; j++)
                 a[i][j] = mat.a[i][j];
@@ -93,7 +99,7 @@ void Matrice::setval(int i, int j, int k)
     a[i][j] = k;
 }
 
-int Matrice::getval(int i, int j) const
+int& Matrice::operator()(int i, int j)
 {
     return a[i][j];
 }
